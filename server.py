@@ -13,8 +13,6 @@ CITY = "enugu"
 # LAT = 6.4402
 # LON = 7.4943
 
-part = ""
-
 app = Flask(__name__)
 
 
