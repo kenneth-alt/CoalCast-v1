@@ -27,9 +27,10 @@ def get_lat_lon():
     return LAT, LON
     
     
-@app.route('/')
+@app.route('/current')
 def current():
     LAT, LON = get_lat_lon()
     response = requests.get(f"https://api.openweathermap.org/data/2.5/weather?lat={LAT}&lon={LON}&appid={OPENWEATHER_API_KEY}")
     data = response.json()
     return data
+
