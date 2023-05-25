@@ -15,6 +15,9 @@ CITY = "enugu"
 
 app = Flask(__name__)
 
+@app.route('/')
+def index():
+    return render_template("index.html")
 
 def get_lat_lon():
     try:
@@ -34,6 +37,7 @@ def current_weather():
     try:
         LAT, LON = get_lat_lon()
         response = requests.get(f"https://api.openweathermap.org/data/2.5/weather?lat={LAT}&lon={LON}&appid={OPENWEATHER_API_KEY}")
+        response.raise_for_status()
         weather_data = response.json()
         return  weather_data
     except requests.exceptions.HTTPError as err:
@@ -44,13 +48,16 @@ def forcast():
     try:
         LAT, LON = get_lat_lon()
         response = requests.get(f"https://api.openweathermap.org/data/2.5/forecast?lat={LAT}&lon={LON}&appid={OPENWEATHER_API_KEY}")
+        response.raise_for_status()
         forcast_data = response.json()
         return  forcast_data
     except requests.exceptions.HTTPError as err:
         return f"Error: {err}"
    
-@app.route('/')
-def index():
-    return render_template("index.html")
-
-
+# @app.route('/map')
+# def map():
+#     try:
+#         response = requests.get(f"https://tile.openweathermap.org/map/{layer}/{z}/{x}/{y}.png?appid={API key}")
+#         response.raise_for_status()
+#         return response
+        
